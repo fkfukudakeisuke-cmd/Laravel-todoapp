@@ -58,6 +58,9 @@
 
                 <div class="space-y-3">
                     @forelse($practices as $practice)
+                        <p class="text-sm text-gray-500">
+                            {{ $practice->created_at->format('Y/m/d H:i') }}
+                        </p>
                         <div
                             class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 hover:shadow-md transition">
 
@@ -70,9 +73,9 @@
 
                                     <button type="submit" class="text-2xl">
                                         @if ($practice->is_completed)
-                                            ▢
+                                            ☑️
                                         @else
-                                            ✅
+                                            ⬜
                                         @endif
                                     </button>
                                 </form>
