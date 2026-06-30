@@ -132,6 +132,8 @@
                             </p>
                         </div>
                     @endforelse
+                    {{ $practices->links() }}
+
                 </div>
 
             </div>
@@ -139,5 +141,6 @@
         </div>
 
     </div>
+
 
 </x-app-layout>

@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\GoogleController;
+use App\Models\Post;
 use App\Models\Practice;
 use Illuminate\Support\Facades\Route;
 
@@ -9,13 +13,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//test用route
-Route::get('/test', function () {
-    return view('test');
+//gogogle api認証
+Route::get('/auth/google', [GoogleController::class, 'redirect'])
+    ->name('google.login');
+
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
+    ->name('google.callback');
+
+Route::get('/google-test', function () {
+    dd(config('services.google'));
 });
-
-
-
 
 Route::get('/dashboard', function () {
     return redirect()->route('practices.index');
@@ -41,11 +48,33 @@ Route::middleware('auth')->group(function () {
     //ステータス管理へのroute
     ROute::patch('/practices/{practice}/toggle',[PracticeController::class,'toggle'])->name('practices.toggle');
 
+  
+    // 保存
+    Route::post('/blog/store', [PostController::class, 'store'])
+        ->name('blog.store');
+    // 作成画面
+    Route::get('/blog/create', [PostController::class, 'create'])
+        ->name('blog.create');
+    // 一覧
+    Route::get('/blog/', [PostController::class, 'index'])
+        ->name('blog.index');
 
+    //パラメーターを使った個別用のルートを設定
+    Route::get('/blog/show/{post}', [PostController::class, 'show'])
+        ->name('post.show');
 
+    //編集用route
+    Route::get('/blog/{post}/edit', [PostController::class, 'edit'])
+        ->name('blog.edit');
+    //更新用route
+    Route::patch('/blog/{post}', [PostController::class, 'update'])
+        ->name('blog.update');
 
-
-
+    //削除用route
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])
+        ->name('blog.destroy');
+    
+    
 
 
 

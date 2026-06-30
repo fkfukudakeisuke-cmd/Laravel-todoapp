@@ -4,6 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel-app
+
+
+    # コンテナ内でホストと同じユーザーで実行する
+    user: "${UID}:${GID}"
+
     # ⬇️ app の方に ports を追加し、5173 をこちらに繋ぎます！
     ports:
       - "5173:5173" 

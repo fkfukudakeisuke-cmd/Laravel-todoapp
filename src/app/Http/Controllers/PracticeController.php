@@ -18,7 +18,7 @@ class PracticeController extends Controller
                 $query->where('title', 'like', '%' . $keyword . '%');
             })
             ->latest()
-            ->get();
+            ->paginate(5);
 
         // 後で作る views/practices/index.blade.php へデータを渡して画面を表示
         return view('practices.index', compact('practices', 'keyword'));
